@@ -174,6 +174,8 @@ always-y += hbm_edt_kern.o
 always-y += xdpsock_kern.o
 always-y += kprobe_submit_bio_kern.o
 
+TPROGS_CFLAGS +=-static #compile statically so this can be run on vm
+
 ifeq ($(ARCH), arm)
 # Strip all except -D__LINUX_ARM_ARCH__ option needed to handle linux
 # headers when arm instruction set identification is requested.
