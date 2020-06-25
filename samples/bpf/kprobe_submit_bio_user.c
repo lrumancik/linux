@@ -9,6 +9,8 @@
 #include <bpf/bpf.h>
 #include "trace_helpers.h"
 #include "bpf_load.h"
+#include <errno.h>
+#include <string.h>
 
 int main(int argc, char **argv)
 {
@@ -23,6 +25,17 @@ int main(int argc, char **argv)
 	}
 
 	printf("loaded kprobe/submit_bio program successfully\n");
+
+	/* drop first 32 regions */
+	uint32_t index = 0;
+	uint32_t val = 0xffffffff;
+
+	ret = bpf_map_update_elem(map_fd[0], &index, &val, BPF_ANY);
+
+	if (ret)
+		printf("error updating map element\n");
+	else
+		printf("successfully updated map element\n");
 
 	strcpy(test_file, getenv("HOME"));
 	strcat(test_file, "/kprobe_test");
