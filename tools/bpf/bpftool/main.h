@@ -86,6 +86,7 @@ static const char * const prog_type_name[] = {
 	[BPF_PROG_TYPE_TRACING]			= "tracing",
 	[BPF_PROG_TYPE_STRUCT_OPS]		= "struct_ops",
 	[BPF_PROG_TYPE_EXT]			= "ext",
+	[BPF_PROG_TYPE_IO_FILTER]		= "io_filter",
 };
 
 static const char * const attach_type_name[__MAX_BPF_ATTACH_TYPE] = {
@@ -122,6 +123,7 @@ static const char * const attach_type_name[__MAX_BPF_ATTACH_TYPE] = {
 	[BPF_TRACE_FEXIT] = "fexit",
 	[BPF_MODIFY_RETURN] = "mod_ret",
 	[BPF_LSM_MAC] = "lsm_mac",
+	[BPF_BIO_SUBMIT] = "bio_submit",
 };
 
 extern const char * const map_type_name[];

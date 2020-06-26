@@ -50,6 +50,7 @@
 #include "blk-mq-sched.h"
 #include "blk-pm.h"
 #include "blk-rq-qos.h"
+#include "blk-bpf-io-filter.h"
 
 #ifdef CONFIG_DEBUG_FS
 struct dentry *blk_debugfs_root;
@@ -1003,6 +1004,11 @@ generic_make_request_checks(struct bio *bio)
 			status = BLK_STS_OK;
 			goto end_io;
 		}
+	}
+
+	if (!io_filter_bpf_run(bio)) {
+		status = BLK_STS_PROTECTION;
+		goto end_io;
 	}
 
 	if (!test_bit(QUEUE_FLAG_POLL, &q->queue_flags))

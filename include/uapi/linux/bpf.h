@@ -189,6 +189,7 @@ enum bpf_prog_type {
 	BPF_PROG_TYPE_STRUCT_OPS,
 	BPF_PROG_TYPE_EXT,
 	BPF_PROG_TYPE_LSM,
+	BPF_PROG_TYPE_IO_FILTER,
 };
 
 enum bpf_attach_type {
@@ -226,6 +227,7 @@ enum bpf_attach_type {
 	BPF_CGROUP_INET4_GETSOCKNAME,
 	BPF_CGROUP_INET6_GETSOCKNAME,
 	BPF_XDP_DEVMAP,
+	BPF_BIO_SUBMIT,
 	__MAX_BPF_ATTACH_TYPE
 };
 
@@ -4260,5 +4262,14 @@ struct bpf_sockopt {
 struct bpf_pidns_info {
 	__u32 pid;
 	__u32 tgid;
+};
+
+#define IO_ALLOW 1
+#define IO_BLOCK 0
+
+struct bpf_io_request {
+	__u64 sector_start;	/* first sector */
+	__u32 sector_cnt;	/* number of sectors */
+	__u32 opf;		/* bio->bi_opf */
 };
 #endif /* _UAPI__LINUX_BPF_H__ */

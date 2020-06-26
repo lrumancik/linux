@@ -25,6 +25,7 @@
 #include <linux/badblocks.h>
 
 #include "blk.h"
+#include "blk-bpf-io-filter.h"
 
 static DEFINE_MUTEX(block_class_lock);
 static struct kobject *block_depr;
@@ -935,6 +936,7 @@ void del_gendisk(struct gendisk *disk)
 	if (!sysfs_deprecated)
 		sysfs_remove_link(block_depr, dev_name(disk_to_dev(disk)));
 	pm_runtime_set_memalloc_noio(disk_to_dev(disk), false);
+	io_filter_bpf_free(disk);
 	device_del(disk_to_dev(disk));
 }
 EXPORT_SYMBOL(del_gendisk);
@@ -1719,6 +1721,7 @@ struct gendisk *__alloc_disk_node(int minors, int node_id)
 
 		disk->minors = minors;
 		rand_initialize_disk(disk);
+		io_filter_bpf_init(disk);
 		disk_to_dev(disk)->class = &block_class;
 		disk_to_dev(disk)->type = &disk_type;
 		device_initialize(disk_to_dev(disk));

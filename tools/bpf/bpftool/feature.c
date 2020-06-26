@@ -383,6 +383,8 @@ static void probe_kernel_image_config(const char *define_prefix)
 		{ "CONFIG_IPV6_SEG6_BPF", },
 		/* BPF_PROG_TYPE_LIRC_MODE2 and related helpers */
 		{ "CONFIG_BPF_LIRC_MODE2", },
+		/* BPF_PROG_TYPE_IO_FILTER */
+		{ "CONFIG_BPF_IO_FILTER", },
 		/* BPF stream parser and BPF socket maps */
 		{ "CONFIG_BPF_STREAM_PARSER", },
 		/* xt_bpf module for passing BPF programs to netfilter  */
