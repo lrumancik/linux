@@ -209,6 +209,10 @@ struct gendisk {
 	int node_id;
 	struct badblocks *bb;
 	struct lockdep_map lockdep_map;
+#ifdef CONFIG_BPF_IO_FILTER
+	struct bpf_prog_array __rcu *progs;
+	struct mutex io_filter_lock;
+#endif
 };
 
 #if IS_REACHABLE(CONFIG_CDROM)
