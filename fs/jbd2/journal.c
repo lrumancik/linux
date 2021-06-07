@@ -1715,7 +1715,7 @@ static int __jbd2_journal_erase(journal_t *journal, unsigned int flags)
 	if (!q)
 		return -ENXIO;
 
-	if (JBD2_JOURNAL_FLUSH_DISCARD & !blk_queue_discard(q))
+	if (JBD2_JOURNAL_FLUSH_DISCARD && !blk_queue_discard(q))
 		return -EOPNOTSUPP;
 
 	/*
