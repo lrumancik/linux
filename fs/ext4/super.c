@@ -5844,6 +5844,7 @@ static journal_t *ext4_open_inode_journal(struct super_block *sb,
 {
 	struct inode *journal_inode;
 	journal_t *journal;
+	struct ext4_inode_info *ei;
 
 	journal_inode = ext4_get_journal_inode(sb, journal_inum);
 	if (IS_ERR(journal_inode))
@@ -5855,6 +5856,11 @@ static journal_t *ext4_open_inode_journal(struct super_block *sb,
 		iput(journal_inode);
 		return ERR_CAST(journal);
 	}
+
+	ei = EXT4_I(journal_inode);
+	(void) ei;      /* shut up clang warning if !CONFIG_LOCKDEP */
+	lockdep_set_subclass(&ei->i_data_sem, I_DATA_SEM_JRNL);
+
 	journal->j_private = sb;
 	journal->j_bmap = ext4_journal_bmap;
 	ext4_init_journal_params(sb, journal);
