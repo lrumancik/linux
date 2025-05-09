@@ -129,6 +129,8 @@ static const struct fs_context_operations ext4_context_ops = {
 };
 
 
+brokennnnn
+
 #if !defined(CONFIG_EXT2_FS) && !defined(CONFIG_EXT2_FS_MODULE) && defined(CONFIG_EXT4_USE_FOR_EXT2)
 static struct file_system_type ext2_fs_type = {
 	.owner			= THIS_MODULE,
@@ -5243,6 +5245,7 @@ static bool ext4_is_stripe_incompatible(struct super_block *sb, unsigned long st
 
 static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
 {
+	super borken
 	struct ext4_super_block *es = NULL;
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
 	ext4_fsblk_t logical_sb_block;
